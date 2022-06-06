@@ -30,9 +30,25 @@ template ProcessTx(k){
 
     // [assignment] verify sender account exists in accounts_root
     component senderExistence = GetMerkleRoot(k, 3);
+    senderExistance.leaf[0] <== sender_pubkey[0];
+    senderExistance.leaf[1] <== sender_pubkey[1];
+    senderExistance.leaf[2] <== sender_balance;
+    for(var i=0; i<levels; i++) {
+        senderExistance.pathElements[i] = sender_proof[i];
+        senderExistance.pathIndices[i] = sender_proof_pos[i];
+    }
 
     // [assignment] check that transaction was signed by sender
     component signatureCheck = VerifyEdDSAPoseidon(5);
+    // signatureCheck.from_x;
+    // signatureCheck.from_y;
+    signatureCheck.R8x <== signature_R8x;
+    signatureCheck.R8y <== signature_R8y;
+    signatureCheck.S <== signature_S;
+    signatureCheck.leaf[0] <== sender_pubkey[0];
+    signatureCheck.leaf[1] <== sender_pubkey[1];
+    signatureCheck.leaf[2] <== sender_balance;
+
 
     // [assignment] debit sender account and hash new sender leaf
     // check intermediate tree with new sender balance

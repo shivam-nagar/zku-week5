@@ -31,5 +31,3 @@ template VerifyEdDSAPoseidon(k) {
 
 
 }
-
-component main{public[from_x, from_y, R8x, R8y, S]} = VerifyEdDSAPoseidon(3);

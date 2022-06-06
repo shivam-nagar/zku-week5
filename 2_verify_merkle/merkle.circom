@@ -47,6 +47,9 @@ template ManyMerkleTreeChecker(levels, length, nInputs) {
     // [assignment] verify that the resultant hash (computed merkle root)
     // is in the set of roots received as input
     // Note that running test.sh should create a valid proof in current circuit, even though it doesn't do anything.
+    
+    // compare the output of last hasher with the merkle root.
+    out <== hashers[levels - 1].hash;
 }
 
 component main = ManyMerkleTreeChecker(2, 2, 3);
